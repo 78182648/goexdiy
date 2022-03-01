@@ -64,14 +64,16 @@ type Account struct {
 }
 
 type Ticker struct {
-	Pair CurrencyPair `json:"omitempty"`
-	Last float64      `json:"last,string"`
-	Buy  float64      `json:"buy,string"`
-	Sell float64      `json:"sell,string"`
-	High float64      `json:"high,string"`
-	Low  float64      `json:"low,string"`
-	Vol  float64      `json:"vol,string"`
-	Date uint64       `json:"date"` // 单位:ms
+	Pair    CurrencyPair `json:"omitempty"`
+	Last    float64      `json:"last,string"`
+	Buy     float64      `json:"buy,string"`
+	Sell    float64      `json:"sell,string"`
+	High    float64      `json:"high,string"`
+	Low     float64      `json:"low,string"`
+	Vol     float64      `json:"vol,string"`
+	Open    float64      `json:"open,string"`
+	Percent float64      `json:"percent,string"`
+	Date    uint64       `json:"date"` // 单位:ms
 }
 
 type FutureTicker struct {

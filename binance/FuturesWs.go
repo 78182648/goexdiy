@@ -201,6 +201,7 @@ func (s *FuturesWs) tickerHandle(m map[string]interface{}) *goex.FutureTicker {
 	ticker.Low = goex.ToFloat64(m["l"])
 	ticker.Last = goex.ToFloat64(m["c"])
 	ticker.Vol = goex.ToFloat64(m["v"])
-
+	ticker.Open = goex.ToFloat64(m["o"])
+	ticker.Percent = goex.ToFloat64(m["P"])
 	return &ticker
 }
