@@ -7,21 +7,23 @@ import (
 )
 
 type Order struct {
-	Price        float64
-	Amount       float64
-	AvgPrice     float64
-	DealAmount   float64
-	Fee          float64
-	Cid          string //客户端自定义ID
-	OrderID2     string
-	OrderID      int //deprecated
-	Status       TradeStatus
-	Currency     CurrencyPair
-	Side         TradeSide
-	Type         string //limit / market
-	OrderType    int    //0:default,1:maker,2:fok,3:ioc
-	OrderTime    int    // create  timestamp
-	FinishedTime int64  //finished timestamp
+	Price          float64
+	Amount         float64
+	AvgPrice       float64
+	DealAmount     float64
+	FilledPrice     float64
+	Fee            float64
+	Cid            string //客户端自定义ID
+	OrderID2       string
+	OrderID        int //deprecated
+	Status         TradeStatus
+	ExchangeStatus string
+	Currency       CurrencyPair
+	Side           TradeSide
+	Type           string //limit / market
+	OrderType      int    //0:default,1:maker,2:fok,3:ioc
+	OrderTime      int    // create  timestamp
+	FinishedTime   int64  //finished timestamp
 }
 
 type Trade struct {
