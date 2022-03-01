@@ -185,7 +185,8 @@ func (s *SpotWs) tickerHandle(data json2.RawMessage, pair goex.CurrencyPair) err
 	ticker.High = goex.ToFloat64(tickerData["h"])
 	ticker.Low = goex.ToFloat64(tickerData["l"])
 	ticker.Date = goex.ToUint64(tickerData["E"])
-
+	ticker.Open = goex.ToFloat64(tickerData["o"])
+	ticker.Percent = goex.ToFloat64(tickerData["P"])
 	s.tickerCallFn(&ticker)
 
 	return nil
