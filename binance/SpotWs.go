@@ -201,3 +201,26 @@ func (s *SpotWs) tickerHandle(data json2.RawMessage, pair goex.CurrencyPair) err
 
 	return nil
 }
+
+
+func (s *SpotWs) tradeHandle(data json2.RawMessage, pair goex.CurrencyPair) error {
+	var (
+		tradeData = make(map[string]interface{}, 11)
+		trade     goex.Trade
+	)
+
+	err := json2.Unmarshal(data, &tradeData)
+	if err != nil {
+		logger.Errorf("unmarshal trade response data error [%s] , data = %s", err, string(data))
+		return err
+	}
+
+	trade.Pair = pair
+	trade.Price = goex.ToFloat64(tradeData["p"])
+	trade.Amount = goex.ToFloat64(tradeData["q"])
+	trade.Date = goex.ToInt64(tradeData["T"])
+
+	s.tradeCallFn(&trade)
+
+	return nil
+}
