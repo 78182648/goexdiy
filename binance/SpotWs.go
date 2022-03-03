@@ -133,6 +133,10 @@ func (s *SpotWs) handle(data []byte) error {
 		return s.tickerHandle(r.Data, adaptStreamToCurrencyPair(r.Stream))
 	}
 
+	if strings.HasSuffix(r.Stream, "@trade") {
+		return s.tradeHandle(r.Data, adaptStreamToCurrencyPair(r.Stream))
+	}
+
 	logger.Warn("unknown ws response:", string(data))
 
 	return nil
