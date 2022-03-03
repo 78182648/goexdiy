@@ -223,7 +223,11 @@ func (s *SpotWs) tradeHandle(data json2.RawMessage, pair goex.CurrencyPair) erro
 	trade.Price = goex.ToFloat64(tradeData["p"])
 	trade.Amount = goex.ToFloat64(tradeData["q"])
 	trade.Date = goex.ToInt64(tradeData["T"])
-
+	if tradeData["m"] == true {
+		trade.Type = goex.SELL
+	} else{
+		trade.Type = goex.BUY
+	}
 	s.tradeCallFn(&trade)
 
 	return nil
