@@ -351,9 +351,11 @@ func (ws *WsConn) receiveMessage() {
 			return
 		default:
 			t, msg, err := ws.c.ReadMessage()
+
 			if err != nil {
 				Log.Errorf("[ws][%s] %s", ws.WsUrl, err.Error())
-				if ws.IsAutoReconnect {
+
+				if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) && ws.IsAutoReconnect {
 					Log.Infof("[ws][%s] Unexpected Closed , Begin Retry Connect.", ws.WsUrl)
 					ws.reconnect()
 					continue
@@ -364,7 +366,9 @@ func (ws *WsConn) receiveMessage() {
 				}
 
 				return
+
 			}
+
 			//Log.Debug(string(msg))
 			ws.c.SetReadDeadline(time.Now().Add(ws.readDeadLineTime))
 			switch t {
