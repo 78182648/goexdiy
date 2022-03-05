@@ -46,10 +46,26 @@ func NewSpotWs() *SpotWs {
 	spotWs := &SpotWs{}
 	logger.Debugf("proxy url: %s", os.Getenv("HTTPS_PROXY"))
 
+	//var heartbeatFunc = func() []byte {
+	//
+	//
+	//	spotWs.c.SendPongMessage([]byte("pong"))
+	//	ts := time.Now().Unix()*1000 + 42029
+	//
+	//	//ping := fmt.Sprintf("{\"cmd\":\"ping\",\"args\":[%d],\"id\":\"%s\"}", ts, clientId)
+	//	ping2 := map[string]interface{}{
+	//		"message":  "pong",
+	//		"id":   clientId,
+	//		"args": args}
+	//
+	//	ping3, _ := json.Marshal(ping2)
+	//	return ping3
+	//}
+
 	spotWs.wsBuilder = goex.NewWsBuilder().
 		WsUrl("wss://stream.binance.com:9443/stream?streams=depth/miniTicker/ticker/trade").
 		ProxyUrl(os.Getenv("HTTPS_PROXY")).
-		//Heartbeat(func() []byte { return []byte("pong") }, time.Second * 60).
+		//Heartbeat(heartbeatFunc, time.Second * 60).
 		ProtoHandleFunc(spotWs.handle).AutoReconnect()
 
 	spotWs.reqId = 1

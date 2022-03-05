@@ -251,7 +251,10 @@ func (ws *WsConn) writeRequest() {
 		case d := <-ws.pingMessageBufferChan:
 			err = ws.c.WriteMessage(websocket.PingMessage, d)
 		case d := <-ws.pongMessageBufferChan:
-			Log.Debugf("pong is run at : %d", time.Now())
+
+
+			Log.Debug("pong is running")
+
 			err = ws.c.WriteMessage(websocket.PongMessage, d)
 		case d := <-ws.closeMessageBufferChan:
 			err = ws.c.WriteMessage(websocket.CloseMessage, d)
