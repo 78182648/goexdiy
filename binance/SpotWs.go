@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/78182648/goexdiy"
 	"github.com/78182648/goexdiy/logger"
+	"k8s.io/apimachinery/pkg/util/json"
 	"os"
 	"sort"
 	"strings"
@@ -46,26 +47,19 @@ func NewSpotWs() *SpotWs {
 	spotWs := &SpotWs{}
 	logger.Debugf("proxy url: %s", os.Getenv("HTTPS_PROXY"))
 
-	//var heartbeatFunc = func() []byte {
-	//
-	//
-	//	spotWs.c.SendPongMessage([]byte("pong"))
-	//	ts := time.Now().Unix()*1000 + 42029
-	//
-	//	//ping := fmt.Sprintf("{\"cmd\":\"ping\",\"args\":[%d],\"id\":\"%s\"}", ts, clientId)
-	//	ping2 := map[string]interface{}{
-	//		"message":  "pong",
-	//		"id":   clientId,
-	//		"args": args}
-	//
-	//	ping3, _ := json.Marshal(ping2)
-	//	return ping3
-	//}
+	var heartbeatFunc = func() []byte {
+		ping := map[string]interface{}{
+			"event": "pong",
+			"pong":  "pong",
+		}
+		ping3, _ := json.Marshal(ping)
+		return ping3
+	}
 
 	spotWs.wsBuilder = goex.NewWsBuilder().
 		WsUrl("wss://stream.binance.com:9443/stream?streams=depth/miniTicker/ticker/trade").
 		ProxyUrl(os.Getenv("HTTPS_PROXY")).
-		//Heartbeat(heartbeatFunc, time.Second * 60).
+		Heartbeat(heartbeatFunc, time.Second*60).
 		ProtoHandleFunc(spotWs.handle).AutoReconnect()
 
 	spotWs.reqId = 1
@@ -89,6 +83,11 @@ func (s *SpotWs) TickerCallback(f func(ticker *goex.Ticker)) {
 
 func (s *SpotWs) TradeCallback(f func(trade *goex.Trade)) {
 	s.tradeCallFn = f
+}
+
+func (s *SpotWs) SendMessage(msg []byte) error {
+	s.c.SendPongMessage(msg)
+	return nil
 }
 
 func (s *SpotWs) SubscribeDepth(pair goex.CurrencyPair) error {
