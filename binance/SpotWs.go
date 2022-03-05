@@ -49,6 +49,7 @@ func NewSpotWs() *SpotWs {
 	spotWs.wsBuilder = goex.NewWsBuilder().
 		WsUrl("wss://stream.binance.com:9443/stream?streams=depth/miniTicker/ticker/trade").
 		ProxyUrl(os.Getenv("HTTPS_PROXY")).
+		Heartbeat(func() []byte { return []byte("pong") }, time.Minute * 9).
 		ProtoHandleFunc(spotWs.handle).AutoReconnect()
 
 	spotWs.reqId = 1
