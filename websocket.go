@@ -185,9 +185,10 @@ func (ws *WsConn) connect() error {
 
 	//liu 測試
 	h := func(msg string) error {
+		Log.Debug("my ping handler")
 		err := wsConn.WriteControl(websocket.PongMessage,
 			[]byte(msg),
-			time.Now().Add(time.Minute*9))
+			time.Now().Add(time.Minute*2))
 		if err == websocket.ErrCloseSent {
 			return nil
 		} else if e, ok := err.(net.Error); ok && e.Temporary() {
@@ -337,12 +338,12 @@ func (ws *WsConn) receiveMessage() {
 		return nil
 	})
 
-	ws.c.SetPingHandler(func(ping string) error {
-		Log.Debugf("[%s] received [ping] %s", ws.WsUrl, ping)
-		ws.SendPongMessage([]byte("pong"))
-		ws.c.SetReadDeadline(time.Now().Add(ws.readDeadLineTime))
-		return nil
-	})
+	//ws.c.SetPingHandler(func(ping string) error {
+	//	Log.Debugf("[%s] received [ping] %s", ws.WsUrl, ping)
+	//	ws.SendPongMessage([]byte("pong"))
+	//	ws.c.SetReadDeadline(time.Now().Add(ws.readDeadLineTime))
+	//	return nil
+	//})
 
 	for {
 		select {
