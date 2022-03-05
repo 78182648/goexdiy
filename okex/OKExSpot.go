@@ -3,7 +3,7 @@ package okex
 import (
 	"fmt"
 	. "github.com/78182648/goexdiy"
-	"github.com/78182648/goexdiy/internal/logger"
+	"github.com/78182648/goexdiy/logger"
 	"github.com/go-openapi/errors"
 	"net/url"
 	"sort"

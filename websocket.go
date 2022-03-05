@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	. "github.com/78182648/goexdiy/internal/logger"
+	. "github.com/78182648/goexdiy/logger"
 	"github.com/gorilla/websocket"
 	"net/http"
 	"net/http/httputil"

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/78182648/goexdiy/internal/logger"
+	. "github.com/78182648/goexdiy/logger"
 
 	. "github.com/78182648/goexdiy"
 )

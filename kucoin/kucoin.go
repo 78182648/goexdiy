@@ -2,7 +2,7 @@ package kucoin
 
 import (
 	. "github.com/78182648/goexdiy"
-	log "github.com/78182648/goexdiy/internal/logger"
+	log "github.com/78182648/goexdiy/logger"
 	"github.com/Kucoin/kucoin-go-sdk"
 	"time"
 )

@@ -4,7 +4,7 @@ import (
 	json2 "encoding/json"
 	"fmt"
 	"github.com/78182648/goexdiy"
-	"github.com/78182648/goexdiy/internal/logger"
+	"github.com/78182648/goexdiy/logger"
 	"os"
 	"sort"
 	"strings"
@@ -136,7 +136,6 @@ func (s *SpotWs) handle(data []byte) error {
 	if strings.HasSuffix(r.Stream, "@trade") {
 		return s.tradeHandle(r.Data, adaptStreamToCurrencyPair(r.Stream))
 	}
-
 	logger.Warn("unknown ws response:", string(data))
 
 	return nil

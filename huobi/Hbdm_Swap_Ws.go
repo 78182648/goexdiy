@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	. "github.com/78182648/goexdiy"
-	"github.com/78182648/goexdiy/internal/logger"
+	"github.com/78182648/goexdiy/logger"
 	"strings"
 	"sync"
 	"time"

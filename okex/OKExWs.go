@@ -3,7 +3,7 @@ package okex
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/78182648/goexdiy/internal/logger"
+	"github.com/78182648/goexdiy/logger"
 	"strconv"
 	"strings"
 	"sync"

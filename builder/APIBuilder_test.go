@@ -2,7 +2,7 @@ package builder
 
 import (
 	"github.com/78182648/goexdiy"
-	"github.com/78182648/goexdiy/internal/logger"
+	"github.com/78182648/goexdiy/logger"
 	"github.com/stretchr/testify/assert"
 	"log"
 	"testing"

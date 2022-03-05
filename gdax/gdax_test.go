@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/78182648/goexdiy"
-	"github.com/78182648/goexdiy/internal/logger"
+	"github.com/78182648/goexdiy/logger"
 )
 
 var gdax = New(http.DefaultClient, "", "")
