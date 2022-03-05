@@ -258,6 +258,7 @@ func (ws *WsConn) writeRequest() {
 			if ws.HeartbeatIntervalTime > 0 {
 				err = ws.c.WriteMessage(websocket.TextMessage, ws.HeartbeatData())
 				heartTimer.Reset(ws.HeartbeatIntervalTime)
+				Log.Debugf("heart is run at : %d",time.Now())
 			}
 		}
 
