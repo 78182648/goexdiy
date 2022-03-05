@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/78182648/goexdiy"
 	"github.com/78182648/goexdiy/logger"
-	"k8s.io/apimachinery/pkg/util/json"
 	"os"
 	"sort"
 	"strings"
@@ -46,16 +45,16 @@ func NewSpotWs() *SpotWs {
 	spotWs := &SpotWs{}
 	logger.Debugf("proxy url: %s", os.Getenv("HTTPS_PROXY"))
 
-	var heartbeatFunc = func() []byte {
-		spotWs.c.SendPongMessage([]byte("pong"))
-		msg, _ := json.Marshal("pong")
-		return msg
-	}
+	//var heartbeatFunc = func() []byte {
+	//	spotWs.c.SendPongMessage([]byte("pong"))
+	//	msg, _ := json.Marshal("pong")
+	//	return msg
+	//}
 
 	spotWs.wsBuilder = goex.NewWsBuilder().
 		WsUrl("wss://stream.binance.com:9443/stream?streams=depth/miniTicker/ticker/trade").
 		ProxyUrl(os.Getenv("HTTPS_PROXY")).
-		Heartbeat(heartbeatFunc, time.Second*60).
+		//Heartbeat(heartbeatFunc, time.Second*60).
 		ProtoHandleFunc(spotWs.handle).AutoReconnect()
 
 	spotWs.reqId = 1
