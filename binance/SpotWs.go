@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/78182648/goexdiy"
 	"github.com/78182648/goexdiy/logger"
+	"k8s.io/apimachinery/pkg/util/json"
 	"os"
 	"sort"
 	"strings"
@@ -47,7 +48,8 @@ func NewSpotWs() *SpotWs {
 
 	var heartbeatFunc = func() []byte {
 		spotWs.c.SendPongMessage([]byte("pong"))
-		return []byte("pong")
+		msg, _ := json.Marshal("pong")
+		return msg
 	}
 
 	spotWs.wsBuilder = goex.NewWsBuilder().
