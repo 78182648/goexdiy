@@ -251,6 +251,7 @@ func (ws *WsConn) writeRequest() {
 		case d := <-ws.pingMessageBufferChan:
 			err = ws.c.WriteMessage(websocket.PingMessage, d)
 		case d := <-ws.pongMessageBufferChan:
+			Log.Debugf("pong is run at : %d", time.Now())
 			err = ws.c.WriteMessage(websocket.PongMessage, d)
 		case d := <-ws.closeMessageBufferChan:
 			err = ws.c.WriteMessage(websocket.CloseMessage, d)
@@ -348,7 +349,7 @@ func (ws *WsConn) receiveMessage() {
 
 				return
 			}
-			//			Log.Debug(string(msg))
+			Log.Debug(string(msg))
 			ws.c.SetReadDeadline(time.Now().Add(ws.readDeadLineTime))
 			switch t {
 			case websocket.TextMessage:
