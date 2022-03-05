@@ -354,7 +354,7 @@ func (ws *WsConn) receiveMessage() {
 
 				return
 			}
-			Log.Debug(string(msg))
+			//Log.Debug(string(msg))
 			ws.c.SetReadDeadline(time.Now().Add(ws.readDeadLineTime))
 			switch t {
 			case websocket.TextMessage:
