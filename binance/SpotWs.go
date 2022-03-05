@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/78182648/goexdiy"
 	"github.com/78182648/goexdiy/logger"
-	"k8s.io/apimachinery/pkg/util/json"
 	"os"
 	"sort"
 	"strings"
@@ -47,12 +46,8 @@ func NewSpotWs() *SpotWs {
 	logger.Debugf("proxy url: %s", os.Getenv("HTTPS_PROXY"))
 
 	var heartbeatFunc = func() []byte {
-		ping := map[string]interface{}{
-			"method": "pong",
-			"pong":  "pong",
-		}
-		ping3, _ := json.Marshal(ping)
-		return ping3
+		spotWs.c.SendPongMessage([]byte("pong"))
+		return []byte("pong")
 	}
 
 	spotWs.wsBuilder = goex.NewWsBuilder().
