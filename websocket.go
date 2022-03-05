@@ -258,7 +258,7 @@ func (ws *WsConn) writeRequest() {
 			if ws.HeartbeatIntervalTime > 0 {
 				err = ws.c.WriteMessage(websocket.TextMessage, ws.HeartbeatData())
 				heartTimer.Reset(ws.HeartbeatIntervalTime)
-				Log.Debugf("heart is run at : %d",time.Now())
+				Log.Debugf("heart is run at : %d", time.Now())
 			}
 		}
 
@@ -322,7 +322,10 @@ func (ws *WsConn) receiveMessage() {
 
 	ws.c.SetPingHandler(func(ping string) error {
 		Log.Debugf("[%s] received [ping] %s", ws.WsUrl, ping)
-		ws.SendPongMessage([]byte("pong"))
+		//ws.SendPongMessage([]byte("pong"))
+
+		ws.SendMessage([]byte("pong"))
+
 		ws.c.SetReadDeadline(time.Now().Add(ws.readDeadLineTime))
 		return nil
 	})
