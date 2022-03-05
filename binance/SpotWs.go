@@ -1,7 +1,6 @@
 package binance
 
 import (
-	"bytes"
 	json2 "encoding/json"
 	"fmt"
 	"github.com/78182648/goexdiy"
@@ -49,7 +48,7 @@ func NewSpotWs() *SpotWs {
 
 	var heartbeatFunc = func() []byte {
 		ping := map[string]interface{}{
-			"event": "pong",
+			"method": "pong",
 			"pong":  "pong",
 		}
 		ping3, _ := json.Marshal(ping)
@@ -135,12 +134,6 @@ func (s *SpotWs) SubscribeTrade(pair goex.CurrencyPair) error {
 }
 
 func (s *SpotWs) handle(data []byte) error {
-	if bytes.Contains(data, []byte("ping")) {
-		logger.Debugf("binance send ping ,  time = %d", time.Now().Unix()*1000)
-		pong := bytes.ReplaceAll(data, []byte("ping"), []byte("pong"))
-		s.c.SendMessage(pong)
-		return nil
-	}
 
 	var r resp
 	err := json2.Unmarshal(data, &r)
