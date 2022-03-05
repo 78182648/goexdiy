@@ -6,6 +6,7 @@ import (
 	"fmt"
 	. "github.com/78182648/goexdiy/logger"
 	"github.com/gorilla/websocket"
+	"net"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -181,6 +182,21 @@ func (ws *WsConn) connect() error {
 	}
 
 	wsConn.SetReadDeadline(time.Now().Add(ws.readDeadLineTime))
+
+	//liu 測試
+	h := func(msg string) error {
+		err := wsConn.WriteControl(websocket.PongMessage,
+			[]byte(msg),
+			time.Now().Add(time.Minute*9))
+		if err == websocket.ErrCloseSent {
+			return nil
+		} else if e, ok := err.(net.Error); ok && e.Temporary() {
+			return nil
+		}
+		Log.Error(err)
+		return err
+	}
+	wsConn.SetPingHandler(h)
 
 	if ws.IsDump {
 		dumpData, _ := httputil.DumpResponse(resp, true)
