@@ -365,7 +365,7 @@ func (ws *WsConn) receiveMessage() {
 					ws.ErrorHandleFunc(err)
 				}
 
-				return
+				break
 
 			}
 
